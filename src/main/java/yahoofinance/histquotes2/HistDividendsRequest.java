@@ -112,7 +112,7 @@ public class HistDividendsRequest {
         // Parse CSV
         for (String line = br.readLine(); line != null; line = br.readLine()) {
 
-            log.info("Parsing CSV line: " + Utils.unescape(line));
+            log.debug("Parsing CSV line: " + Utils.unescape(line));
             HistoricalDividend dividend = this.parseCSVLine(line);
             result.add(dividend);
         }

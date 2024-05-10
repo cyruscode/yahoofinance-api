@@ -7,6 +7,9 @@ import yahoofinance.quotes.stock.StockDividend;
 import yahoofinance.quotes.stock.StockQuote;
 import yahoofinance.quotes.stock.StockStats;
 
+import static yahoofinance.quotes.csv.QuotesProperty.*;
+import static yahoofinance.quotes.csv.QuotesProperty.MarketCapitalization;
+
 /**
  *
  * @author Stijn Strickx
@@ -20,93 +23,93 @@ public class StockQuotesData {
     }
     
     public String getValue(QuotesProperty property) {
-        int i = StockQuotesRequest.DEFAULT_PROPERTIES.indexOf(property);
-        if(i >= 0 && i < this.data.length) {
-            return this.data[i];
+        int propertyIndex = StockQuotesRequest.DEFAULT_PROPERTIES.indexOf(property);
+        if(propertyIndex >= 0 && propertyIndex < this.data.length) {
+            return this.data[propertyIndex];
         }
         return null;
     }
     
     public StockQuote getQuote() {
-        String symbol = this.getValue(QuotesProperty.Symbol);
+        String symbol = this.getValue(Symbol);
         StockQuote quote = new StockQuote(symbol);
         
-        quote.setPrice(Utils.getBigDecimal(this.getValue(QuotesProperty.LastTradePriceOnly)));
-        quote.setLastTradeSize(Utils.getLong(this.getValue(QuotesProperty.LastTradeSize)));
-        quote.setAsk(Utils.getBigDecimal(this.getValue(QuotesProperty.AskRealtime), this.getValue(QuotesProperty.Ask)));
-        quote.setAskSize(Utils.getLong(this.getValue(QuotesProperty.AskSize)));
-        quote.setBid(Utils.getBigDecimal(this.getValue(QuotesProperty.BidRealtime), this.getValue(QuotesProperty.Bid)));
-        quote.setBidSize(Utils.getLong(this.getValue(QuotesProperty.BidSize)));
-        quote.setOpen(Utils.getBigDecimal(this.getValue(QuotesProperty.Open)));
-        quote.setPreviousClose(Utils.getBigDecimal(this.getValue(QuotesProperty.PreviousClose)));
-        quote.setDayHigh(Utils.getBigDecimal(this.getValue(QuotesProperty.DaysHigh)));
-        quote.setDayLow(Utils.getBigDecimal(this.getValue(QuotesProperty.DaysLow)));
+        quote.setPrice(Utils.getBigDecimal(this.getValue(LastTradePriceOnly)));
+        quote.setLastTradeSize(Utils.getLong(this.getValue(LastTradeSize)));
+        quote.setAsk(Utils.getBigDecimal(this.getValue(AskRealtime), this.getValue(Ask)));
+        quote.setAskSize(Utils.getLong(this.getValue(AskSize)));
+        quote.setBid(Utils.getBigDecimal(this.getValue(BidRealtime), this.getValue(Bid)));
+        quote.setBidSize(Utils.getLong(this.getValue(BidSize)));
+        quote.setOpen(Utils.getBigDecimal(this.getValue(Open)));
+        quote.setPreviousClose(Utils.getBigDecimal(this.getValue(PreviousClose)));
+        quote.setDayHigh(Utils.getBigDecimal(this.getValue(DaysHigh)));
+        quote.setDayLow(Utils.getBigDecimal(this.getValue(DaysLow)));
         
         quote.setTimeZone(ExchangeTimeZone.getStockTimeZone(symbol));
-        quote.setLastTradeDateStr(this.getValue(QuotesProperty.LastTradeDate));
-        quote.setLastTradeTimeStr(this.getValue(QuotesProperty.LastTradeTime));
-        quote.setLastTradeTime(Utils.parseDateTime(this.getValue(QuotesProperty.LastTradeDate), this.getValue(QuotesProperty.LastTradeTime), quote.getTimeZone()));
+        quote.setLastTradeDateStr(this.getValue(LastTradeDate));
+        quote.setLastTradeTimeStr(this.getValue(LastTradeTime));
+        quote.setLastTradeTime(Utils.parseDateTime(this.getValue(LastTradeDate), this.getValue(LastTradeTime), quote.getTimeZone()));
         
-        quote.setYearHigh(Utils.getBigDecimal(this.getValue(QuotesProperty.YearHigh)));
-        quote.setYearLow(Utils.getBigDecimal(this.getValue(QuotesProperty.YearLow)));
-        quote.setPriceAvg50(Utils.getBigDecimal(this.getValue(QuotesProperty.FiftydayMovingAverage)));
-        quote.setPriceAvg200(Utils.getBigDecimal(this.getValue(QuotesProperty.TwoHundreddayMovingAverage)));
+        quote.setYearHigh(Utils.getBigDecimal(this.getValue(YearHigh)));
+        quote.setYearLow(Utils.getBigDecimal(this.getValue(YearLow)));
+        quote.setPriceAvg50(Utils.getBigDecimal(this.getValue(FiftydayMovingAverage)));
+        quote.setPriceAvg200(Utils.getBigDecimal(this.getValue(TwoHundreddayMovingAverage)));
         
-        quote.setVolume(Utils.getLong(this.getValue(QuotesProperty.Volume)));
-        quote.setAvgVolume(Utils.getLong(this.getValue(QuotesProperty.AverageDailyVolume)));
+        quote.setVolume(Utils.getLong(this.getValue(Volume)));
+        quote.setAvgVolume(Utils.getLong(this.getValue(AverageDailyVolume)));
         
         return quote;
     }
     
     public StockStats getStats() {
-        String symbol = this.getValue(QuotesProperty.Symbol);
+        String symbol = this.getValue(Symbol);
         StockStats stats = new StockStats(symbol);
         
-        stats.setMarketCap(Utils.getBigDecimal(this.getValue(QuotesProperty.MarketCapitalization)));
-        stats.setSharesFloat(Utils.getLong(this.getValue(QuotesProperty.SharesFloat)));
-        stats.setSharesOutstanding(Utils.getLong(this.getValue(QuotesProperty.SharesOutstanding)));
-        stats.setSharesOwned(Utils.getLong(this.getValue(QuotesProperty.SharesOwned)));
+        stats.setMarketCap(Utils.getBigDecimal(this.getValue(MarketCapitalization)));
+        stats.setSharesFloat(Utils.getLong(this.getValue(SharesFloat)));
+        stats.setSharesOutstanding(Utils.getLong(this.getValue(SharesOutstanding)));
+        stats.setSharesOwned(Utils.getLong(this.getValue(SharesOwned)));
         
-        stats.setEps(Utils.getBigDecimal(this.getValue(QuotesProperty.DilutedEPS)));
-        stats.setPe(Utils.getBigDecimal(this.getValue(QuotesProperty.PERatio)));
-        stats.setPeg(Utils.getBigDecimal(this.getValue(QuotesProperty.PEGRatio)));
+        stats.setEps(Utils.getBigDecimal(this.getValue(DilutedEPS)));
+        stats.setPe(Utils.getBigDecimal(this.getValue(PERatio)));
+        stats.setPeg(Utils.getBigDecimal(this.getValue(PEGRatio)));
         
-        stats.setEpsEstimateCurrentYear(Utils.getBigDecimal(this.getValue(QuotesProperty.EPSEstimateCurrentYear)));
-        stats.setEpsEstimateNextQuarter(Utils.getBigDecimal(this.getValue(QuotesProperty.EPSEstimateNextQuarter)));
-        stats.setEpsEstimateNextYear(Utils.getBigDecimal(this.getValue(QuotesProperty.EPSEstimateNextYear)));
+        stats.setEpsEstimateCurrentYear(Utils.getBigDecimal(this.getValue(EPSEstimateCurrentYear)));
+        stats.setEpsEstimateNextQuarter(Utils.getBigDecimal(this.getValue(EPSEstimateNextQuarter)));
+        stats.setEpsEstimateNextYear(Utils.getBigDecimal(this.getValue(EPSEstimateNextYear)));
         
-        stats.setPriceBook(Utils.getBigDecimal(this.getValue(QuotesProperty.PriceBook)));
-        stats.setPriceSales(Utils.getBigDecimal(this.getValue(QuotesProperty.PriceSales)));
-        stats.setBookValuePerShare(Utils.getBigDecimal(this.getValue(QuotesProperty.BookValuePerShare)));
+        stats.setPriceBook(Utils.getBigDecimal(this.getValue(PriceBook)));
+        stats.setPriceSales(Utils.getBigDecimal(this.getValue(PriceSales)));
+        stats.setBookValuePerShare(Utils.getBigDecimal(this.getValue(BookValuePerShare)));
         
-        stats.setOneYearTargetPrice(Utils.getBigDecimal(this.getValue(QuotesProperty.OneyrTargetPrice)));
-        stats.setEBITDA(Utils.getBigDecimal(this.getValue(QuotesProperty.EBITDA)));
-        stats.setRevenue(Utils.getBigDecimal(this.getValue(QuotesProperty.Revenue)));
+        stats.setOneYearTargetPrice(Utils.getBigDecimal(this.getValue(OneyrTargetPrice)));
+        stats.setEBITDA(Utils.getBigDecimal(this.getValue(EBITDA)));
+        stats.setRevenue(Utils.getBigDecimal(this.getValue(Revenue)));
         
-        stats.setShortRatio(Utils.getBigDecimal(this.getValue(QuotesProperty.ShortRatio)));
+        stats.setShortRatio(Utils.getBigDecimal(this.getValue(ShortRatio)));
         
         return stats;
     }
     
     public StockDividend getDividend() {
-        String symbol = this.getValue(QuotesProperty.Symbol);
+        String symbol = this.getValue(Symbol);
         StockDividend dividend = new StockDividend(symbol);
         
-        dividend.setPayDate(Utils.parseDividendDate(this.getValue(QuotesProperty.DividendPayDate)));
-        dividend.setExDate(Utils.parseDividendDate(this.getValue(QuotesProperty.ExDividendDate)));
-        dividend.setAnnualYield(Utils.getBigDecimal(this.getValue(QuotesProperty.TrailingAnnualDividendYield)));
-        dividend.setAnnualYieldPercent(Utils.getBigDecimal(this.getValue(QuotesProperty.TrailingAnnualDividendYieldInPercent)));
+        dividend.setPayDate(Utils.parseDividendDate(this.getValue(DividendPayDate)));
+        dividend.setExDate(Utils.parseDividendDate(this.getValue(ExDividendDate)));
+        dividend.setAnnualYield(Utils.getBigDecimal(this.getValue(TrailingAnnualDividendYield)));
+        dividend.setAnnualYieldPercent(Utils.getBigDecimal(this.getValue(TrailingAnnualDividendYieldInPercent)));
         
         return dividend;
     }
     
     public Stock getStock() {
-        String symbol = this.getValue(QuotesProperty.Symbol);
+        String symbol = this.getValue(Symbol);
         Stock stock = new Stock(symbol);
         
-        stock.setName(Utils.getString(this.getValue(QuotesProperty.Name)));
-        stock.setCurrency(Utils.getString(this.getValue(QuotesProperty.Currency)));
-        stock.setStockExchange(Utils.getString(this.getValue(QuotesProperty.StockExchange)));
+        stock.setName(Utils.getString(this.getValue(Name)));
+        stock.setCurrency(Utils.getString(this.getValue(Currency)));
+        stock.setStockExchange(Utils.getString(this.getValue(StockExchange)));
         
         stock.setQuote(this.getQuote());
         stock.setStats(this.getStats());

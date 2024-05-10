@@ -10,6 +10,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,29 +26,15 @@ import yahoofinance.util.RedirectableRequest;
  * @param <T> Type of object that can contain the retrieved information from a
  * quotes request
  */
+@Getter
+@AllArgsConstructor
 public abstract class QuotesRequest<T> {
 
     private static final Logger log = LoggerFactory.getLogger(QuotesRequest.class);
 
     protected final String query;
+    @Setter
     protected List<QuotesProperty> properties;
-
-    public QuotesRequest(String query, List<QuotesProperty> properties) {
-        this.query = query;
-        this.properties = properties;
-    }
-
-    public String getQuery() {
-        return query;
-    }
-
-    public List<QuotesProperty> getProperties() {
-        return properties;
-    }
-
-    public void setProperties(List<QuotesProperty> properties) {
-        this.properties = properties;
-    }
 
     protected abstract T parseCSVLine(String line);
 
@@ -59,7 +48,7 @@ public abstract class QuotesRequest<T> {
 
     public T getSingleResult() throws IOException {
         List<T> results = this.getResult();
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             return results.get(0);
         }
         return null;
@@ -98,7 +87,7 @@ public abstract class QuotesRequest<T> {
             if (line.equals("Missing Symbols List.")) {
                 log.error("The requested symbol was not recognized by Yahoo Finance");
             } else {
-                log.info("Parsing CSV line: " + Utils.unescape(line));
+                log.debug("Parsing CSV line: " + Utils.unescape(line));
 
                 T data = this.parseCSVLine(line);
                 result.add(data);

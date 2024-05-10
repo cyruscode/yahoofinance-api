@@ -22,7 +22,7 @@ public class StockQuotesRequest extends QuotesRequest<StockQuotesData> {
      * using the easy String.split
      *
      */
-    public static final List<QuotesProperty> DEFAULT_PROPERTIES = new ArrayList<QuotesProperty>();
+    public static final List<QuotesProperty> DEFAULT_PROPERTIES = new ArrayList<>();
 
     static {
 

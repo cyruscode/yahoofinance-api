@@ -79,6 +79,7 @@ public class StockQuotesQuery1V7Request extends QuotesRequest<Stock> {
             quote.setLastTradeTime(Utils.unixToCalendar(node.get("regularMarketTime").asLong()));
         }
 
+        quote.setYtdReturn(Utils.getBigDecimal(getStringValue(node, "ytdReturn")));
         quote.setYearHigh(Utils.getBigDecimal(getStringValue(node,"fiftyTwoWeekHigh")));
         quote.setYearLow(Utils.getBigDecimal(getStringValue(node,"fiftyTwoWeekLow")));
         quote.setPriceAvg50(Utils.getBigDecimal(getStringValue(node,"fiftyDayAverage")));

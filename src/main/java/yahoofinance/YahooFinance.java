@@ -51,16 +51,10 @@ public class YahooFinance {
     public static final String HISTQUOTES2_ENABLED = System.getProperty("yahoofinance.histquotes2.enabled", "true");
     public static final String HISTQUOTES2_BASE_URL = System.getProperty("yahoofinance.baseurl.histquotes2", "https://query1.finance.yahoo.com/v7/finance/download/");
     public static final String HISTQUOTES_QUERY2V8_BASE_URL = System.getProperty("yahoofinance.baseurl.histquotesquery2v8", "https://query2.finance.yahoo.com/v8/finance/chart/");
-    public static final String HISTQUOTES2_SCRAPE_URL = System.getProperty("yahoofinance.scrapeurl.histquotes2", "https://finance.yahoo.com/quote/%5EGSPC/options");
+    public static final String HISTQUOTES2_SCRAPE_URL = System.getProperty("yahoofinance.scrapeurl.histquotes2", "https://fc.yahoo.com");
     public static final String HISTQUOTES2_CRUMB_URL = System.getProperty("yahoofinance.crumburl.histquotes2", "https://query2.finance.yahoo.com/v1/test/getcrumb");
     public static final String HISTQUOTES2_CRUMB = System.getProperty("yahoofinance.crumb", "");
     public static final String HISTQUOTES2_COOKIE = System.getProperty("yahoofinance.cookie", "");
-    public static final String HISTQUOTES2_COOKIE_NAMESPACE = System.getProperty("yahoofinance.cookie.namespace", "yahoo");
-    public static final String HISTQUOTES2_COOKIE_AGREE = System.getProperty("yahoofinance.cookie.agree", "agree");
-    public static final String HISTQUOTES2_COOKIE_OATH_URL = System.getProperty("yahoofinance.cookie.oathurl", "https://guce.oath.com/consent");
-    public static final String HISTQUOTES2_COOKIE_OATH_HOST = System.getProperty("yahoofinance.cookie.oathhost", "guce.oath.com");
-    public static final String HISTQUOTES2_COOKIE_OATH_ORIGIN = System.getProperty("yahoofinance.cookie.oathorigin", "https://guce.oath.com");
-    public static final String HISTQUOTES2_COOKIE_OATH_DONEURL = System.getProperty("yahoofinance.cookie.oathDoneUrl", "https://guce.yahoo.com/copyConsent?sessionId=");
     public static final String QUOTES_CSV_DELIMITER = ",";
     public static final String TIMEZONE = "America/New_York";
     

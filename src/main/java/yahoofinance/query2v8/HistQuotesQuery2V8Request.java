@@ -140,7 +140,7 @@ public class HistQuotesQuery2V8Request {
             return "";
         }
 
-        Map<String, String> params = new LinkedHashMap<String, String>();
+        Map<String, String> params = new LinkedHashMap<>();
         params.put("period1", String.valueOf(this.from.getTimeInMillis() / 1000));
         params.put("period2", String.valueOf(this.to.getTimeInMillis() / 1000));
         params.put("interval", this.interval.getTag());

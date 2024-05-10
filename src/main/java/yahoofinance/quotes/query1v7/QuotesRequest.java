@@ -41,7 +41,7 @@ public abstract class QuotesRequest<T> {
 
     public T getSingleResult() throws IOException {
         List<T> results = this.getResult();
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             return results.get(0);
         }
         return null;
@@ -56,7 +56,7 @@ public abstract class QuotesRequest<T> {
     public List<T> getResult() throws IOException {
         List<T> result = new ArrayList<T>();
 
-        Map<String, String> params = new LinkedHashMap<String, String>();
+        Map<String, String> params = new LinkedHashMap<>();
         params.put("symbols", this.symbols);
 
         String url = YahooFinance.QUOTES_QUERY1V7_BASE_URL + "?" + Utils.getURLParameters(params);
@@ -73,7 +73,7 @@ public abstract class QuotesRequest<T> {
         redirectableRequest.setConnectTimeout(YahooFinance.CONNECTION_TIMEOUT);
         redirectableRequest.setReadTimeout(YahooFinance.CONNECTION_TIMEOUT);
 
-        Map<String, String> requestProperties = new HashMap<String, String>();
+        Map<String, String> requestProperties = new HashMap<>();
         requestProperties.put("Cookie", CrumbManager.getCookie());
 
         URLConnection connection = redirectableRequest.openConnection(requestProperties);
@@ -82,9 +82,8 @@ public abstract class QuotesRequest<T> {
         JsonNode node = objectMapper.readTree(is);
         if(node.has("quoteResponse") && node.get("quoteResponse").has("result")) {
             node = node.get("quoteResponse").get("result");
-            for(int i = 0; i < node.size(); i++) {
-                result.add(this.parseJson(node.get(i)));
-            }
+            node.forEach(_node -> result.add((this.parseJson(_node))));
+
         } else {
             throw new IOException("Invalid response");
         }

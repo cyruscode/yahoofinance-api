@@ -23,6 +23,8 @@ public class Utils {
 
     private static final Logger log = LoggerFactory.getLogger(Utils.class);
 
+
+    public static final BigDecimal MINUS_ONE = new BigDecimal(-1);
     public static final BigDecimal HUNDRED = new BigDecimal(100);
     public static final BigDecimal THOUSAND = new BigDecimal(1000);
     public static final BigDecimal MILLION = new BigDecimal(1000000);
@@ -162,8 +164,18 @@ public class Utils {
         if (denominator == null || numerator == null || denominator.compareTo(BigDecimal.ZERO) == 0) {
             return BigDecimal.ZERO;
         }
+
         return numerator.divide(denominator, 4, RoundingMode.HALF_EVEN)
-                .multiply(HUNDRED).setScale(2, RoundingMode.HALF_EVEN);
+            .multiply(HUNDRED).setScale(2, RoundingMode.HALF_EVEN);
+    }
+
+    public static BigDecimal getPercentRelative(BigDecimal numerator, BigDecimal denominator) {
+        if (denominator == null || numerator == null || denominator.compareTo(BigDecimal.ZERO) == 0) {
+            return BigDecimal.ZERO;
+        }
+
+      return numerator.divide(denominator, 4, RoundingMode.HALF_EVEN).subtract(BigDecimal.ONE)
+            .multiply(HUNDRED).setScale(2, RoundingMode.HALF_EVEN);
     }
 
     public static double getPercent(double numerator, double denominator) {
@@ -309,7 +321,7 @@ public class Utils {
         StringBuilder buffer = new StringBuilder(data.length());
         for (int i = 0; i < data.length(); i++) {
             if ((int) data.charAt(i) > 256) {
-                buffer.append("\\u").append(Integer.toHexString((int) data.charAt(i)));
+                buffer.append("\\u").append(Integer.toHexString(data.charAt(i)));
             } else {
                 if (data.charAt(i) == '\n') {
                     buffer.append("\\n");
